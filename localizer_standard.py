@@ -14,7 +14,7 @@ from expyriment.misc import Clock
 from queue import PriorityQueue
 
 #LAUNCH WITH
-#python localizer_standard.py --background-color 0 0 0 --text-color 250 250 250 --rsvp-display-time=250 --rsvp-display-isi=100 --picture-display-time=200 --picture-isi=0 --fs_delay_time=100 --stim-dir stim_files --splash ./instructions_localizer_time.csv 
+#python localizer_standard.py --background-color 0 0 0 --text-color 250 250 250 --rsvp-display-time=250 --rsvp-display-isi=100 --picture-display-time=200 --picture-isi=0 --fs_delay_time=100 --stim-dir stim_files --splash ./instructions_localizer_time.csv --total-duration=301000 
 
 
 # constants (which can be modified by optional command line arguments)
@@ -164,7 +164,8 @@ key_menu = key_click[0]
 print(key_click)
 while (key_menu == 'c' or key_menu == 'i'):
     if key_menu == 'c' :
-        calibrage = "Nous allons faire un calibrage"
+        #calibrage = "Nous allons faire un calibrage"
+        calibrage = "Pas implémenté"
         calibration = stimuli.TextLine(calibrage, text_font=TEXT_FONT,
                                               text_size=TEXT_SIZE,
                                               text_colour=TEXT_COLOR,
@@ -260,7 +261,6 @@ if key_menu == 'e' :
                     mapsounds[f] = stimuli.Audio(op.join(bp, f))
                     mapsounds[f].preload()
                 events.put((onset, cond, 'sound', f, mapsounds[f]))
-                events.put((onset + TEXT_DURATION, cond, 'blank', 'blank', fs))
             elif stype == 'picture':
                 if not f in mappictures:
                     mappictures[f] = stimuli.Picture(op.join(bp, f))
@@ -283,7 +283,7 @@ if key_menu == 'e' :
                 events.put((onset, cond, 'text', f, maptext[f]))
                 events.put((onset + TEXT_DURATION, cond, 'blank', 'blank', fs))
             elif stype == 'rsvp':
-                for i, w in enumerate(f.split(',')):
+                for i, w in enumerate(f.split(','), start=0):
                     if not w in maptext:
                         maptext[w] = stimuli.TextLine(w,
                                                       text_font=TEXT_FONT,
@@ -311,7 +311,6 @@ if key_menu == 'e' :
     
     exp.add_data_variable_names([ 'condition', 'time', 'stype', 'id', 'target_time'])
     
-    #%
     expyriment.control.start()
     
     
@@ -324,7 +323,7 @@ if key_menu == 'e' :
     
     while not(events.empty()):
         onset, cond, stype, id, stim = events.get()
-        print('{} to {}, id : {}'.format(cond, onset, id))
+        #print('{} to {}, id : {}'.format(cond, onset, id))
         while a.time < (onset - 10):
             a.wait(1)
             k = kb.check()
