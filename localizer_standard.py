@@ -1,7 +1,5 @@
 #! /usr/bin/env python
-# Time-stamp: <2018-03-28 16:31:03 cp983411>
 
-import sys
 import io
 import os.path as op
 import argparse
@@ -13,9 +11,14 @@ from expyriment.misc import Clock
 
 from queue import PriorityQueue
 
-#LAUNCH WITH
-#python localizer_standard.py --background-color 0 0 0 --text-color 250 250 250 --rsvp-display-time=250 --rsvp-display-isi=100 --picture-display-time=200 --picture-isi=0 --fs_delay_time=100 --stim-dir stim_files --splash ./instructions_localizer_time.csv --total-duration=301000 
+"""
+Quick documentation to launch the localizer standard
 
+python localizer_standard.py --background-color 0 0 0 --text-color 250 250 250 
+--rsvp-display-time=250 --rsvp-display-isi=100 --picture-display-time=200 
+--picture-isi=0 --fs_delay_time=100 --stim-dir stim_files 
+--splash ./instructions_localizer_time.csv --total-duration=301000 
+"""
 
 # constants (which can be modified by optional command line arguments)
 WORD_DURATION = 450
@@ -34,9 +37,10 @@ WINDOW_SIZE = (1220, 700)
 
 
 # process command line options
-
 parser = argparse.ArgumentParser()
-parser.add_argument("--splash", help="displays a picture (e.g. containing instructions) before starting the experiment")
+parser.add_argument("--splash", 
+                    type=str,
+                    help="displays a picture (e.g. containing instructions) before starting the experiment")
 
 parser.add_argument('--csv_files',
                     nargs='+',
@@ -131,8 +135,6 @@ exp = expyriment.design.Experiment(name="Localizer",
 
 expyriment.misc.add_fonts('fonts')
 
-#%
-
 expyriment.control.initialize(exp)
 
 #exp.background_colour = BACKGROUND_COLOR
@@ -147,7 +149,8 @@ key_menu = ''
 def display_menu():
     menu = "Pour effectuer un calibrage, tapez (c) \n"\
             "Pour afficher les instructions, tapez (i) \n"\
-            "Pour commencer l'enregistrement, tapez (e) \n"
+            "Pour commencer, tapez (e) \n"\
+            "Pour quitter, tapez (q) \n"
     width_screen, height_screen =  exp.screen.size
     menu_localizer = stimuli.TextBox(menu, size=(int(width_screen/1.5), int(height_screen/1.5)),
                                       text_font=TEXT_FONT,
@@ -155,7 +158,7 @@ def display_menu():
                                       text_colour=TEXT_COLOR,
                                       background_colour=BACKGROUND_COLOR)
     menu_localizer.present()
-    return kb.wait_char(['c', 'i', 'e'])
+    return kb.wait_char(['c', 'i', 'e', 'q'])
 
 
 
@@ -163,9 +166,11 @@ key_click = display_menu()
 key_menu = key_click[0]
 print(key_click)
 while (key_menu == 'c' or key_menu == 'i'):
+    if key_menu == 'q':
+        expyriment.control.end()
     if key_menu == 'c' :
         #calibrage = "Nous allons faire un calibrage"
-        calibrage = "Pas implémenté"
+        calibrage = "Pas implémenté."
         calibration = stimuli.TextLine(calibrage, text_font=TEXT_FONT,
                                               text_size=TEXT_SIZE,
                                               text_colour=TEXT_COLOR,
@@ -242,7 +247,6 @@ if key_menu == 'e' :
     
     
     # load stimuli
-    
     mapsounds = dict()
     mapspeech = dict()
     maptext = dict()
@@ -323,7 +327,6 @@ if key_menu == 'e' :
     
     while not(events.empty()):
         onset, cond, stype, id, stim = events.get()
-        #print('{} to {}, id : {}'.format(cond, onset, id))
         while a.time < (onset - 10):
             a.wait(1)
             k = kb.check()
