@@ -45,10 +45,13 @@ To acquire the localizer we use a TR of 2.4 sec, and try to cover all the brain 
 ### Basic level
 To launch the stimulus:
 
-* open a terminal
-* tape 
+* open a terminal and tape 
 
     cd <path_of_repository>
+
+
+* launch the menu 
+
     . ./menu_localizer.sh
 
 
