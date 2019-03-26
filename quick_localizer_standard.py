@@ -9,6 +9,5 @@ subprocess.call(['python', 'localizer_standard.py', '--background-color', '0', '
                  '--picture-display-time', '200',
                  '--picture-isi', '0',
                  '--fs_delay_time', '100',
-                 '--stim-dir', 'stim_files',
-                 '--splash', 'instructions_localizer.csv', 
-                 '--total-duration', '301000'])
+                 '--stim-dir', 'stim_files', 
+                 '--total-duration', '301000',  '--cali'])

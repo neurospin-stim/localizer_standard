@@ -11,8 +11,6 @@ cmd_localizer='python localizer_standard.py --background-color 0 0 0
             --picture-isi 0 --fs_delay_time 100 
             --stim-dir stim_files --total-duration 301000'
 
-echo $cmd_localizer
-
 
 until [ "$resp" = "Quit" ]
 do
@@ -20,9 +18,6 @@ do
     if [ $next = "11" ]; then
         next="Quit";
     fi
-
-
-#<width-of-box> <top-of-box> <number-of-options-visible>
 
     dialog --clear --title "Localizer standart" "$@" \
          --nocancel --default-item  "$next" \
@@ -40,22 +35,23 @@ do
   resp=$(cat $tempfile)
 
   case $resp in
-      1) cali=' --cali'
-         echo $cali
+      1) cali=' --cali 1'
+         echo "calibration"
          $cmd_localizer$cali;;
-      2) calibration='--splash instructions_localizer.csv'
+      2) calibration=' --splash instructions_localizer.csv'
+         echo "instructions"
          $cmd_localizer$calibration;;
       3) session=' --csv_file session1_localizer_standard.csv'
-         echo $session
+         echo "session 1"
          $cmd_localizer$session;;
       4) session=' --csv_file session2_localizer_standard.csv'
-         echo $session
+         echo "session 2"
          $cmd_localizer$session;;
       5) session=' --csv_file session3_localizer_standard.csv'
-         echo $session
+         echo "session 3"
          $cmd_localizer$session;;
       6) session=' --csv_file session4_localizer_standard.csv'
-         echo $session
+         echo "session 4"
          $cmd_localizer$session;;
       Quit) echo "Finito!" ;;
       *) dialog --msgbox "I do not understand..." 6 32 ;;

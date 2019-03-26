@@ -36,16 +36,26 @@ To acquire the localizer we use a TR of 2.4 sec, and try to cover all the brain 
 
 ## Installation 
 
-     cd /tmp
+     cd <path_of_repository>
      git clone https://github.com/neurospin-stim/localizer_standard.git
      cd neurospin-stim
-     python setup.py install --user
 
 
 ## Launch the protocol
 ### Basic level
+To launch the stimulus:
 
-        python quick_localizer_standard.py
+* open a terminal
+* tape 
+
+    cd <path_of_repository>
+    . ./menu_localizer.sh
+
+
+* so a Dialog window will be displayed
+![](./menu_dialog_localizer.png "menu_dialog_localizer.png")
+
+    
 
 
 ### Advanced level
@@ -58,11 +68,22 @@ Each line indicates the name of the stim (clicDaudio ...), the onset, the kind o
 
 The command for the localizer protocol with the options is:
 
-    python localizer_standard.py --background-color 0 0 0 --text-color 250 250 250 --rsvp-display-time=250 --rsvp-display-isi=100 --picture-display-time=200 --picture-isi=0 --fs_delay_time=100 --stim-dir stim_files --splash ./instructions_localizer_time.csv --total-duration=301000 
+    python localizer_standard.py --background-color 0 0 0 --text-color 250 250 250 --rsvp-display-time=250 --rsvp-display-isi=100 --picture-display-time=200 --picture-isi=0 --fs_delay_time=100 --stim-dir stim_files  --total-duration=301000  --csv_file session1_localizer_standard.csv
+
+The command for launching the instructions is:
+
+    python localizer_standard.py --background-color 0 0 0 --text-color 250 250 250 --rsvp-display-time=250 --rsvp-display-isi=100 --picture-display-time=200 --picture-isi=0 --fs_delay_time=100 --stim-dir stim_files  --total-duration=301000  --splash instructions_localizer.csv
+
+The command for launching the calibration is:
+
+    python localizer_standard.py --background-color 0 0 0 --text-color 250 250 250 --rsvp-display-time=250 --rsvp-display-isi=100 --picture-display-time=200 --picture-isi=0 --fs_delay_time=100 --stim-dir stim_files  --total-duration=301000    --cali 1
+
+
 
 The options for the localizer are: 
 
 * --background-color 0 0 0 : color of the background
+* --csv_file : file for stimulation
 * --text-color 250 250 250 : color of the text
 * --rsvp-display-time=250 : set the duration of display of single words in rsvp stimuli
 * --rsvp-display-isi=100 : set the duration of display of single words in rsvp stimuli
@@ -70,8 +91,9 @@ The options for the localizer are:
 * --picture-isi=0 : set the ISI between pictures in pictseq sequence
 * --fs_delay_time=100 : time between the end of blanck screen and the beginning of fixation cross
 * --stim-dir stim_files : directory in which stim are available
-* --splash ./instructions_localizer_time.csv : file for instructions
+* --splash : csv file to propose the instructions
 * --total-duration=301000 : all duration of the expyriment
+* --cali : option to launch only the calibration
 
 
 # IMPORT AND PROCESS DATA

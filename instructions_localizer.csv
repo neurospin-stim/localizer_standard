@@ -29,12 +29,12 @@
  100	text	
  250	text	trois
 3000	text	
-7000	box	Durant chaque essai, évitez\n de bouger les yeux. Une croix\n vous aidera à garder votre regard\n au centre de l'écran\n +
+7000	box	Durant chaque essai, évitez\n de bouger les yeux. Une croix\n vous aidera à garder votre regard\n au centre de l'écran\n.
 2000	text	
-6000	box	Les stimulations auditives (phrases,\n instruction ou calcul) ressembleront\n aux deux exemples suivants
+6000	box	Les stimulations auditives (phrases,\n instruction ou calcul) ressembleront\n aux deux exemples suivants:
 1000	text	
 4000	sound	exemple.wav
 4000	sound	calc25.wav
 6000	box	ATTENTION!\n ces essais vont se succéder assez\nrapidement. Restez donc attentif\n tout au long de ces cinq minutes.
 2000	text	
-4000	box	Nous allons bientôt commencer\n\n Appuyez sur un bouton\n lorsque vous serez prêt.
+4000	box	\n\n Nous allons bientôt commencer\n

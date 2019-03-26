@@ -33,7 +33,8 @@ PICTURE_ISI = 0
 TEXT_DURATION = 3000
 TOTAL_EXPE_DURATION = -1 # time in millisec
 BACKGROUND_COLOR=(240, 240, 240)
-TEXT_FONT = 'TITUSCBZ.TTF'
+#TEXT_FONT = 'TITUSCBZ.TTF'
+TEXT_FONT = 'ARIALN.TTF'
 TEXT_SIZE = 48
 TEXT_COLOR = (0, 0, 0)
 WINDOW_SIZE = (1220, 700)
@@ -45,10 +46,10 @@ WINDOW_SIZE = (1220, 700)
 parser = argparse.ArgumentParser()
 parser.add_argument("--splash", 
                     type=str,
-                    help="displays a picture (e.g. containing instructions) \
-                            before starting the experiment")
+                    help="csv file to propose the instructions")
 parser.add_argument("--cali",
-                    help="calibration")
+                    type=int,
+                    help="option to launch only the calibration")
 parser.add_argument('--csv_file',
                     type=str,
                     help="file for stimulation")
@@ -117,11 +118,7 @@ parser.add_argument("--stim-dir",
 args = parser.parse_args()
 splash_screen = args.splash
 calibration = args.cali
-print('cali')
-print(calibration)
 csv_file = args.csv_file
-print('csv_file')
-print(csv_file)
 FS_DELAY = args.fs_delay_time
 WORD_DURATION = args.rsvp_display_time
 PICTURE_DURATION = args.picture_display_time
@@ -160,41 +157,15 @@ bs = stimuli.BlankScreen(colour=BACKGROUND_COLOR)
 fs = stimuli.FixCross(size=(25, 25), line_width=3, colour=TEXT_COLOR)
 
 ##############################
-# DISPLAY MENU
-key_menu = ''
-#
-#def display_menu():
-#    menu = "Pour effectuer un calibrage, tapez (c) \n"\
-#            "Pour afficher les instructions, tapez (i) \n"\
-#            "Pour commencer, tapez (e) \n"\
-#            "Pour quitter, tapez (q) \n"
-#    width_screen, height_screen =  exp.screen.size
-#    menu_localizer = stimuli.TextBox(menu, size=(int(width_screen/1.5), int(height_screen/1.5)),
-#                                      text_font=TEXT_FONT,
-#                                      text_size=TEXT_SIZE,
-#                                      text_colour=TEXT_COLOR,
-#                                      background_colour=BACKGROUND_COLOR)
-#    menu_localizer.present()
-#    return kb.wait_char(['c', 'i', 'e', 'q'])
-#
-
-##############################
 # START PROTOCOL
 
 #time to display the message of Preparing expyriment, otherwise it can be very short 
 #and we don't see what it is exactly
 exp.clock.wait(800)
 
-#key_click = display_menu()
-#key_menu = key_click[0]
-#
-#while (key_menu != 'q'):
 
-print('splash_screen')
-print(splash_screen)   
-    
 #CALIBRATION
-if calibration :
+if not (calibration is None) :
     calibrage = "Nous allons faire un calibrage"
     calibration = stimuli.TextLine(calibrage, text_font=TEXT_FONT,
                                           text_size=TEXT_SIZE,
@@ -203,11 +174,9 @@ if calibration :
     calibration.present()
     exp.clock.wait(1500)
     
-    test_sound = 'ph10.wav'
-    bp = op.dirname(splash_screen)
-    if not(STIM_DIR==''):
-        bp = op.join(bp, STIM_DIR)
-    instruction = stimuli.Audio(op.join(bp, test_sound))
+    calibration_sound = op.join(STIM_DIR, 'ph10.wav')
+    #instruction = stimuli.Audio(op.join(bp, test_sound))
+    instruction = stimuli.Audio(calibration_sound)
     instruction.preload()
     instruction.present()
     fs.present()  
@@ -221,10 +190,10 @@ elif not (splash_screen is None):
             instruction_duration, stype, instruction_line = instruction_line[0], instruction_line[1], instruction_line[2]
             if stype == 'box':
                 instruction_line = instruction_line.replace('\\n', '\n')                       
-                width_screen, height_screen =  exp.screen.size     
+                width_screen, height_screen =  exp.screen.size   
                 y = (-1*exp.screen.center_y)/2
                 instruction = stimuli.TextBox(instruction_line, 
-                                              position=(0, y), 
+                                              position=(0, -230), 
                                               size=(int(width_screen), int(height_screen)),
                                               text_font=TEXT_FONT,
                                               text_size=TEXT_SIZE,
@@ -237,7 +206,7 @@ elif not (splash_screen is None):
                 #fs.present()
                 #exp.clock.wait(WORD_ISI*6)
             elif stype == 'text':
-                instruction_line = instruction_line.replace('\BL', '\n')
+                #instruction_line = instruction_line.replace('\BL', '\n')
                 instruction = stimuli.TextLine(instruction_line,
                                               text_font=TEXT_FONT,
                                               text_size=TEXT_SIZE,
@@ -272,31 +241,7 @@ elif not (splash_screen is None):
             kb.wait_char(' ')
             
 #LAUNCH ONE SESSION            
-else:
-#    choix_session = "Choix de la session \n"\
-#            "Session 1, tapez (1) \n"\
-#            "Session 2, tapez (2) \n"\
-#            "Session 3, tapez (3) \n"\
-#            "Session 4, tapez (4) \n"
-#    width_screen, height_screen =  exp.screen.size
-#    choix_session = stimuli.TextBox(choix_session, 
-#                                    size=(int(width_screen/1.5), int(height_screen/1.5)),
-#                                    text_font=TEXT_FONT,
-#                                    text_size=TEXT_SIZE,
-#                                    text_colour=TEXT_COLOR,
-#                                    background_colour=BACKGROUND_COLOR)
-#    choix_session.present()
-#    session = kb.wait_char(['1', '2', '3', '4'])
-    
-#        if session[0] == '1' :
-#            csv_files = ['./session1_localizer_standard.csv']
-#        elif session[0] == '2' :
-#            csv_files = ['./session2_localizer_standard.csv']
-#        elif session[0] == '3' :
-#            csv_files = ['./session3_localizer_standard.csv']
-#        elif session[0] == '4' :
-#            csv_files = ['./session4_localizer_standard.csv']
-    
+else:    
     wm = stimuli.TextLine('Waiting for scanner sync (or press \'t\')',
                           text_font=TEXT_FONT,
                           text_size=TEXT_SIZE,
