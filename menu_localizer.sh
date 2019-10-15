@@ -1,5 +1,6 @@
 #! /bin/bash
 
+
 tempfile=`(tempfile) 2>/dev/null` || tempfile=/tmp/test$$
 trap "rm -f $tempfile" 0 $SIG_NONE $SIG_HUP $SIG_INT $SIG_QUIT $SIG_TERM
 
@@ -19,7 +20,7 @@ do
         next="Quit";
     fi
 
-    dialog --clear --title "Localizer standart" "$@" \
+    dialog --clear --title "Localizer standard" "$@" \
          --nocancel --default-item  "$next" \
          --menu "Sélectionner votre choix et appuyer sur entrée\n" \
              24 40 7 \
@@ -37,21 +38,26 @@ do
   case $resp in
       1) cali=' --cali 1'
          echo "calibration"
+	 echo $cmd_localizer$cali
          $cmd_localizer$cali;;
-      2) calibration=' --splash instructions_localizer.csv'
+      2) instructions=' --splash instructions_localizer.csv'
          echo "instructions"
-         $cmd_localizer$calibration;;
+         $cmd_localizer$instructions;;
       3) session=' --csv_file session1_localizer_standard.csv'
          echo "session 1"
+         echo $cmd_localizer$session
          $cmd_localizer$session;;
       4) session=' --csv_file session2_localizer_standard.csv'
          echo "session 2"
+         echo $cmd_localizer$session
          $cmd_localizer$session;;
       5) session=' --csv_file session3_localizer_standard.csv'
          echo "session 3"
+         echo $cmd_localizer$session
          $cmd_localizer$session;;
       6) session=' --csv_file session4_localizer_standard.csv'
          echo "session 4"
+         echo $cmd_localizer$session
          $cmd_localizer$session;;
       Quit) echo "Finito!" ;;
       *) dialog --msgbox "I do not understand..." 6 32 ;;
