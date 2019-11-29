@@ -77,7 +77,7 @@ parser.add_argument("--picture-isi",
                     type=int,
                     default=PICTURE_ISI,
                     help="set the ISI between pictures in  pictseq sequence")
-parser.add_argument("--text-display-time",
+parser.add_argument("--text-duration",
                     type=int,
                     default=TEXT_DURATION,
                     help="set the duration of display of text")
@@ -121,7 +121,7 @@ FS_DELAY = args.fs_delay_time
 WORD_DURATION = args.rsvp_display_time
 PICTURE_DURATION = args.picture_display_time
 PICTURE_ISI = args.picture_isi
-TEXT_DURATION = args.text_display_time
+TEXT_DURATION = args.text_duration
 TEXT_SIZE = args.text_size
 TEXT_COLOR = tuple(args.text_color)
 TEXT_FONT = args.text_font

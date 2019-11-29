@@ -26,10 +26,10 @@ do
              24 40 7 \
              1 "Effectuer un calibrage" \
              2 "Afficher les instructions" \
-             3 "Session 1 " \
-             4 "Session 2" \
-             5 "Session 3" \
-             6 "Session 4" \
+             3 "Run 1 " \
+             4 "Run 2" \
+             5 "Run 3" \
+             6 "Run 4" \
              Quit  "End the experiment"  2>$tempfile
 
   retvat=$?
